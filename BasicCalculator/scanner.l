@@ -1,19 +1,16 @@
 %{
-    #include <stdio.h>
+    #include "parser.tab.h"
 %}
 %%
-"+"     {printf("PLUS\n");}
-"-"     {printf("MINUS\n");}
-"*"     {printf("MULTIPLY\n");}
-"/"     {printf("DIVIDE\n");}
-"|"     {printf("ABS\n");}
-"("     {printf("OPENPARENTHESIS\n");}
-")"     {printf("CLOSEPARENTHESIS\n");}
-[0-9]+  {printf("NUMBER: %s\n", yytext);}
+"+"     {return ADD;}
+"-"     {return SUB;}
+"*"     {return MUL;}
+"/"     {return DIV;}
+"|"     {return ABS;}
+"("     {return OP;}
+")"     {return CP;}
+[0-9]+  { yylval = atoi(yytext); return NUMBER;}
+\n      {return EOL;}
 [ \t]+  {/*Ignore*/}
 .       {printf("Unsupported Char\n");}
 %%
-
-int main(int argc, char** argv){
-    yylex();
-}
